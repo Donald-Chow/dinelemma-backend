@@ -2,7 +2,7 @@ class GroupMembersController < ApplicationController
   before_action :set_group, except: %i[create destroy ]
 
   def create
-    @group_member = GroupMember.create(group_member_params)
+    @group_member = GroupMember.new(group_member_params)
     authorize @group_member
 
     if @group_member.save

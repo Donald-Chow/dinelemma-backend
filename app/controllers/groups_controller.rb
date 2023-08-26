@@ -20,7 +20,7 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @group = Group.create(group_params)
+    @group = Group.new(group_params)
     authorize @group
     if @group.save
       GroupMember.create(user: current_user, group: @group, admin: true)
