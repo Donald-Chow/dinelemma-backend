@@ -2,7 +2,7 @@ class GroupsController < ApplicationController
   before_action :set_group, except: %i[create index]
 
   def index
-    @groups = policy_scope(Groups)
+    @groups = policy_scope(Group)
 
     render json: {
       status: :ok,
