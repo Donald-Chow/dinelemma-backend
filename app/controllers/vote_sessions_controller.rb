@@ -25,7 +25,7 @@ class VoteSessionsController < ApplicationController
   private
 
   def vote_session_params
-    params.require(:vote_session).permit(:name, :restaurant_list_id, :restaurant_id, :group_id)
+    params.require(:vote_session).permit(:name, :restaurant_list_id, :group_id)
   end
 
   def set_vote_session
