@@ -6,6 +6,10 @@ class VoteSessionPolicy < ApplicationPolicy
     # end
   end
 
+  def show?
+    record.users.include?(user)
+  end
+
   def create?
     true
   end
