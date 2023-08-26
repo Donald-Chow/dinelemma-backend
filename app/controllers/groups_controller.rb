@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :set_group, except: %i[create destroy index]
+  before_action :set_group, except: %i[create index]
 
   def index
     @groups = policy_scope(Groups)
