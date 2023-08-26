@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_26_042316) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_26_072637) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,6 +82,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_042316) do
     t.index ["restaurant_list_id"], name: "index_vote_sessions_on_restaurant_list_id"
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "vote_session_id", null: false
+    t.bigint "restaurant_id", null: false
+    t.integer "result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_votes_on_restaurant_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
+    t.index ["vote_session_id"], name: "index_votes_on_vote_session_id"
+  end
+
   add_foreign_key "group_members", "groups"
   add_foreign_key "group_members", "users"
   add_foreign_key "list_bookmarks", "restaurant_lists"
@@ -90,4 +102,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_042316) do
   add_foreign_key "vote_sessions", "groups"
   add_foreign_key "vote_sessions", "restaurant_lists"
   add_foreign_key "vote_sessions", "restaurants"
+  add_foreign_key "votes", "restaurants"
+  add_foreign_key "votes", "users"
+  add_foreign_key "votes", "vote_sessions"
 end
