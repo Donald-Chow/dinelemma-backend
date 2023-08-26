@@ -2,13 +2,13 @@ class VoteSessionsController < ApplicationController
   before_action :set_vote_session, only: %i[show update]
   def show
     authorize @vote_session
-    @votes = @vote_session.votes.where(user: current_user) if @vote_session.start
+    @votes = @vote_session.votes.where(user: current_user).shuffle if @vote_session.start
 
     render json: {
       status: :ok,
       data: {
         vote_session: @vote_session,
-        votes: @votes.shuffle
+        votes: @votes
       }
     }
   end
