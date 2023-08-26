@@ -5,9 +5,13 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   devise_for :users,
-  controllers: {
-    sessions: 'users/sessions',
-    registrations: 'users/registrations'
-  }
+             controllers: {
+               sessions: 'users/sessions',
+               registrations: 'users/registrations'
+             }
+
   get '/users/current_user', to: 'current_user#index'
+
+  resources :votes, only: [:update]
+  resources :vote_sessions, only: %i[create update show]
 end

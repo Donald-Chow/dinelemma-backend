@@ -20,7 +20,7 @@ User.destroy_all
 
 # Creating test users
 puts 'Creating Users'
-user = User.create(email: 'donald@wagon.com', password: 'secret', username: 'Donald', name: 'Donald')
+user = User.create(email: 'test@wagon.com', password: 'secret', username: 'wagon', name: 'wagon')
 User.create(email: 'test@test.com', password: 'secret', username: 'test123', name: 'test')
 
 puts "Created #{User.count} users"
