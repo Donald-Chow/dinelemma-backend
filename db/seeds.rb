@@ -1,4 +1,7 @@
 # Clearning Database
+puts 'Destroying Votes'
+Vote.destroy_all
+
 puts 'Destroying VoteSession'
 VoteSession.destroy_all
 
@@ -25,7 +28,7 @@ puts "Created #{User.count} users"
 # Creating Restaruants
 puts 'Creating Restaurants'
 
-Restaurant.create(name: 'Land', category: 'Curry')
+restaurant = Restaurant.create(name: 'Land', category: 'Curry')
 Restaurant.create(name: 'Shokumuso', category: 'Lamb')
 Restaurant.create(name: 'I-rottah', category: 'Pizza')
 # Restaurant.create(name: 'Ramen Jiro Meguro', category: 'Ramen')
@@ -98,6 +101,13 @@ puts 'Creating sessions'
 # Create a finished session
 VoteSession.create(group:, name: "Yesterday's Lunch", restaurant_list: list, restaurant: Restaurant.first)
 # create empty vote session
-VoteSession.create(group:, name: "Today's Lunch")
+sess = VoteSession.create(group:, name: "Today's Lunch")
 
 puts "Created #{VoteSession.count} vote session for #{group.name}."
+
+puts "Creating 2 votes for new session"
+
+Vote.create(user:, vote_session: sess, restaurant:, result: 0)
+Vote.create(user: User.last, vote_session: sess, restaurant:, result: 1)
+
+puts "Created #{Vote.count} votes"
