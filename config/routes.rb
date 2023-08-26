@@ -14,4 +14,11 @@ Rails.application.routes.draw do
 
   resources :votes, only: [:update]
   resources :vote_sessions, only: %i[create update show]
+
+  resources :group, except: %i[new edit]
+  resources :group_member, except: %i[new edit show index]
+
+  resources :restaurant, except: %i[new edit destroy]
+  resources :restaurant_list, except: %i[new edit]
+  resources :list_bookmark, only: %i[create destroy]
 end
