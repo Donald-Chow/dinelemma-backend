@@ -10,9 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_26_022641) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_26_032936) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "list_bookmarks", force: :cascade do |t|
+    t.bigint "restaurant_id", null: false
+    t.bigint "restaurant_list_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_list_bookmarks_on_restaurant_id"
+    t.index ["restaurant_list_id"], name: "index_list_bookmarks_on_restaurant_list_id"
+  end
+
+  create_table "restaurant_lists", force: :cascade do |t|
+    t.string "name"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_restaurant_lists_on_user_id"
+  end
 
   create_table "restaurants", force: :cascade do |t|
     t.string "name", null: false
@@ -37,4 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_022641) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "list_bookmarks", "restaurant_lists"
+  add_foreign_key "list_bookmarks", "restaurants"
+  add_foreign_key "restaurant_lists", "users"
 end

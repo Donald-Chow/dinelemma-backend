@@ -1,6 +1,22 @@
+# Clearning Database
 puts 'Destroying Restaurants'
 Restaurant.destroy_all
 
+puts 'Destroying Users'
+User.destroy_all
+
+puts 'Destroying Lists'
+RestaurantList.destroy_all
+
+
+# Creating test users
+puts 'Creating Users'
+user = User.create(email: 'donald@wagon.com', password: 'secret', username: 'Donald', name: 'Donald')
+User.create(email: 'test@test.com', password: 'secret', username: 'test123', name: 'test')
+
+puts "Created #{User.count} users"
+
+# Creating Restaruants
 puts 'Creating Restaurants'
 
 Restaurant.create(name: 'Land', category: 'Curry')
@@ -32,3 +48,19 @@ Restaurant.create(name: 'WAWICH', category: 'Vietnamese')
 Restaurant.create(name: 'Joint', category: 'Burger')
 
 puts "Created #{Restaurant.count} restaurants"
+
+# Creating List
+puts 'Creating List'
+
+list = RestaurantList.create(name: 'Le Wagon Restaurant List', user:)
+
+puts "Created #{RestaurantList.count} list"
+
+# Add Retaurant to list
+puts 'Creating list bookmarks'
+
+Restaurant.all.each do |restaurant|
+  ListBookmark.create(restaurant:, restaurant_list: list)
+end
+
+puts "Created #{ListBookmark.count} list bookmarks"
