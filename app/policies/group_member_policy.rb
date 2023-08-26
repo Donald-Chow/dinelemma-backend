@@ -6,15 +6,15 @@ class GroupMemberPolicy < ApplicationPolicy
     # end
   end
 
-  def create
+  def create?
     record.group.admins.include?(user)
   end
 
-  def update
+  def update?
     record.group.admins.include?(user)
   end
 
-  def destroy
+  def destroy?
     record.group.admins.include?(user) || record.user == user
   end
 end
