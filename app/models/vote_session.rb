@@ -4,5 +4,10 @@ class VoteSession < ApplicationRecord
   belongs_to :restaurant, optional: true
 
   has_many :group_members, through: :group
-  has_many :user, through: :group_members
+  has_many :users, through: :group_members
+
+  has_many :list_bookmarks, through: :restaurant_list
+  has_many :list_restaurants, through: :list_bookmarks, source: :restaurant
+
+  has_many :votes
 end

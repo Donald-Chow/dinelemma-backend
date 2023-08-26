@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   get '/users/current_user', to: 'current_user#index'
 
   resources :votes, only: [:update]
+  resources :vote_sessions, only: %i[create update show]
 end

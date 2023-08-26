@@ -12,4 +12,6 @@ class User < ApplicationRecord
   has_many :groups, through: :group_members
 
   has_many :vote_sessions, through: :groups
+
+  has_many :votes
 end
