@@ -10,4 +10,6 @@ class User < ApplicationRecord
 
   has_many :group_members, dependent: :destroy
   has_many :groups, through: :group_members
+
+  has_many :vote_sessions, through: :groups
 end
