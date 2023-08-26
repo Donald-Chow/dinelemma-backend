@@ -7,4 +7,7 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: self
 
   has_many :restaurant_lists, dependent: :destroy
+
+  has_many :group_members, dependent: :destroy
+  has_many :groups, through: :group_members
 end
