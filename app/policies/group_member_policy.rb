@@ -7,14 +7,14 @@ class GroupMemberPolicy < ApplicationPolicy
   end
 
   def create
-    record.group.admins.include?(current_user)
+    record.group.admins.include?(user)
   end
 
   def update
-    record.group.admins.include?(current_user)
+    record.group.admins.include?(user)
   end
 
   def destroy
-    record.group.admins.include?(current_user) || record.user == current_user
+    record.group.admins.include?(user) || record.user == user
   end
 end
