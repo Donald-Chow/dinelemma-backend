@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_26_035143) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_26_042316) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -70,9 +70,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_035143) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "vote_sessions", force: :cascade do |t|
+    t.string "name", default: -> { "CURRENT_TIMESTAMP" }
+    t.bigint "group_id", null: false
+    t.bigint "restaurant_list_id"
+    t.bigint "restaurant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_vote_sessions_on_group_id"
+    t.index ["restaurant_id"], name: "index_vote_sessions_on_restaurant_id"
+    t.index ["restaurant_list_id"], name: "index_vote_sessions_on_restaurant_list_id"
+  end
+
   add_foreign_key "group_members", "groups"
   add_foreign_key "group_members", "users"
   add_foreign_key "list_bookmarks", "restaurant_lists"
   add_foreign_key "list_bookmarks", "restaurants"
   add_foreign_key "restaurant_lists", "users"
+  add_foreign_key "vote_sessions", "groups"
+  add_foreign_key "vote_sessions", "restaurant_lists"
+  add_foreign_key "vote_sessions", "restaurants"
 end
