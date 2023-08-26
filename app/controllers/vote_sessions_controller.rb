@@ -22,7 +22,7 @@ class VoteSessionsController < ApplicationController
         data: @vote_session
       }
     else
-      render json: { errors: vote.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @vote_session.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -36,7 +36,7 @@ class VoteSessionsController < ApplicationController
         data: @vote_session
       }
     else
-      render json: { errors: vote.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @vote_session.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
