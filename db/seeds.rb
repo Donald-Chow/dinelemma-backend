@@ -64,3 +64,25 @@ Restaurant.all.each do |restaurant|
 end
 
 puts "Created #{ListBookmark.count} list bookmarks"
+
+# Creating a group
+puts 'Creating group'
+
+group = Group.create(name: "TA 1298")
+
+puts "Created #{Group.count} Groups"
+
+# Add Group has an admin
+puts 'Creating group'
+
+GroupMember.create(group:, user:, admin: true)
+
+puts "Created #{GroupMember.where(admin: true).count} admin"
+
+# Add add member to group
+puts 'Creating group'
+
+GroupMember.create(group:, user: User.last)
+
+puts "Created #{group.group_members.count} group members for #{group.name}."
+puts "Admin is #{group.group_members.find_by_admin(true).user.name}"
