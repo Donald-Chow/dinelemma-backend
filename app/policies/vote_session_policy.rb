@@ -9,4 +9,8 @@ class VoteSessionPolicy < ApplicationPolicy
   def create?
     true
   end
+
+  def update?
+    record.users.include?(user)
+  end
 end
