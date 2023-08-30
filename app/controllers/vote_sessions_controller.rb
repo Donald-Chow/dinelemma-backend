@@ -17,10 +17,7 @@ class VoteSessionsController < ApplicationController
     @vote_session = VoteSession.new(vote_session_params)
     authorize @vote_session
     if @vote_session.save
-      render json: {
-        status: { code: 200, message: "Vote Session Created" },
-        data: @vote_session
-      }
+      render json: { active_session: @vote_session }, status: :ok, message: "Vote Session Created"
     else
       render json: { errors: @vote_session.errors.full_messages }, status: :unprocessable_entity
     end
@@ -31,10 +28,8 @@ class VoteSessionsController < ApplicationController
     if @vote_session.update(vote_session_params)
       create_votes(@vote_session) if @vote_session.start
 
-      render json: {
-        status: { code: 200, message: "Vote session Updated" },
-        data: @vote_session
-      }
+      render json: { data: @vote_session }, status: { code: 200, message: "Vote session Updated" }
+
     else
       render json: { errors: @vote_session.errors.full_messages }, status: :unprocessable_entity
     end
