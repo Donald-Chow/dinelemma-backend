@@ -2,7 +2,7 @@ class GroupPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     def resolve
-      scope.users.include?(user)
+      scope.joins(:users).where(group_members: { user: user }).distinct.order(id: :desc)
     end
   end
 
