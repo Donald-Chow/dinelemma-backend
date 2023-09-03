@@ -13,7 +13,12 @@ class GroupsController < ApplicationController
     members = @group.users
     active_session = @group.vote_sessions.find_by(restaurant: nil)
     lists = current_user.restaurant_lists
-    render json: { group: @group, members:, active_session:, lists: }, status: :ok
+    history = @group.vote_sessions.order(updated_at: :desc).includes(:restaurant)
+    render json: { group: @group,
+                   members:,
+                   active_session:,
+                   lists:,
+                   history: history.as_json(include: :restaurant) }, status: :ok
   end
 
   def create
