@@ -16,6 +16,7 @@ class VoteSessionsController < ApplicationController
     if @vote_session.save
       create_votes(@vote_session)
       render json: { active_session: @vote_session }, status: :ok, message: "Vote Session Created"
+      GroupChannel.broadcast_to(@vote_session.group, { vote_session: @vote_session, message: "Session Started" })
     else
       render json: { errors: @vote_session.errors.full_messages }, status: :unprocessable_entity
     end
