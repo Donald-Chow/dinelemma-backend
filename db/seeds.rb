@@ -95,19 +95,3 @@ GroupMember.create(group:, user: User.last)
 
 puts "Created #{group.group_members.count} group members for #{group.name}."
 puts "Admin is #{group.group_members.find_by_admin(true).user.name}"
-
-puts 'Creating sessions'
-
-# Create a finished session
-VoteSession.create(group:, name: "Yesterday's Lunch", restaurant_list: list, restaurant: Restaurant.first)
-# create empty vote session
-sess = VoteSession.create(group:, name: "Today's Lunch")
-
-puts "Created #{VoteSession.count} vote session for #{group.name}."
-
-puts "Creating 2 votes for new session"
-
-Vote.create(user:, vote_session: sess, restaurant:, result: 0)
-Vote.create(user: User.last, vote_session: sess, restaurant:, result: 1)
-
-puts "Created #{Vote.count} votes"

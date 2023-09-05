@@ -9,5 +9,5 @@ class VoteSession < ApplicationRecord
   has_many :list_bookmarks, through: :restaurant_list
   has_many :list_restaurants, through: :list_bookmarks, source: :restaurant
 
-  has_many :votes
+  has_many :votes, dependent: :destroy
 end

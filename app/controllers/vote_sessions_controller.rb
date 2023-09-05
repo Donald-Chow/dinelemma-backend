@@ -3,9 +3,9 @@ class VoteSessionsController < ApplicationController
 
   def show
     authorize @vote_session
-    votes = @vote_session.votes.includes(:restaurant).where(user: current_user).where(result: nil).shuffle
+    votes = @vote_session.votes.where(user: current_user).where(result: nil).shuffle
     render json: {
-      vote_session: @vote_session,
+      vote_session: @vote_session.as_json(include: :restaurant),
       votes: votes.as_json(include: :restaurant)
     }, status: :ok
   end

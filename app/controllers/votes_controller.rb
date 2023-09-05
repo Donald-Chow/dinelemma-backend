@@ -24,9 +24,7 @@ class VotesController < ApplicationController
     vote_session = vote.vote_session
     return if vote_session.restaurant.present?
 
-    if vote_successful?(vote_session, vote.restaurant)
-      set_restaurant_and_broadcast(vote_session, vote.restaurant)
-    end
+    set_restaurant_and_broadcast(vote_session, vote.restaurant) if vote_successful?(vote_session, vote.restaurant)
   end
 
   def vote_successful?(vote_session, restaurant)
@@ -37,6 +35,6 @@ class VotesController < ApplicationController
 
   def set_restaurant_and_broadcast(vote_session, restaurant)
     vote_session.update(restaurant:)
-    VoteSessionChannel.broadcast_to(vote_session, vote_session)
+    VoteSessionChannel.broadcast_to(vote_session, { vote_session: vote_session.as_json(include: :restaurant), message: "Vote Concluded" })
   end
 end
