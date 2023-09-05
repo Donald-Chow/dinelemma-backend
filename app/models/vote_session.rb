@@ -10,4 +10,12 @@ class VoteSession < ApplicationRecord
   has_many :list_restaurants, through: :list_bookmarks, source: :restaurant
 
   has_many :votes, dependent: :destroy
+
+  before_validation :set_default_name
+
+  private
+
+  def set_default_name
+    self.name = Time.now.strftime("%d %b %Y %R")
+  end
 end
