@@ -1,44 +1,36 @@
 class VoteSessionsController < ApplicationController
   before_action :set_vote_session, only: %i[show update]
+
   def show
     authorize @vote_session
-    @votes = @vote_session.votes.where(user: current_user).where(result: nil).shuffle if @vote_session.start
-
+    votes = @vote_session.votes.includes(:restaurant).where(user: current_user).where(result: nil).shuffle
     render json: {
-      status: :ok,
-      data: {
-        vote_session: @vote_session,
-        votes: @votes
-      }
-    }
+      vote_session: @vote_session,
+      votes: votes.as_json(include: :restaurant)
+    }, status: :ok
   end
 
   def create
     @vote_session = VoteSession.new(vote_session_params)
     authorize @vote_session
     if @vote_session.save
-      render json: {
-        status: { code: 200, message: "Vote Session Created" },
-        data: @vote_session
-      }
+      create_votes(@vote_session)
+      render json: { active_session: @vote_session }, status: :ok, message: "Vote Session Created"
     else
       render json: { errors: @vote_session.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
-  def update
-    authorize @vote_session
-    if @vote_session.update(vote_session_params)
-      create_votes(@vote_session) if @vote_session.start
+  # def update
+  #   authorize @vote_session
+  #   if @vote_session.update(vote_session_params)
+  #     create_votes(@vote_session) if @vote_session.start
 
-      render json: {
-        status: { code: 200, message: "Vote session Updated" },
-        data: @vote_session
-      }
-    else
-      render json: { errors: @vote_session.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
+  #     render json: { data: @vote_session }, status: { code: 200, message: "Vote session Updated" }
+  #   else
+  #     render json: { errors: @vote_session.errors.full_messages }, status: :unprocessable_entity
+  #   end
+  # end
 
   private
 
