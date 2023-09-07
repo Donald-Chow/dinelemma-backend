@@ -1,7 +1,7 @@
 class VoteSessionChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "vote_session_#{params[:id]}"
-    logger.info "#{current_user.name} subscribed to VoteSessionChannel for vote_session_#{vote_session.id}"
+    vote_session = VoteSession.find(params[:id])
+    stream_for vote_session
   end
 
   def unsubscribed
