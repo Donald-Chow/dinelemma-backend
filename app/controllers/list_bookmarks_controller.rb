@@ -4,6 +4,8 @@ class ListBookmarksController < ApplicationController
   def create
     @list_bookmark = ListBookmark.new(list_bookmark_params)
     authorize @list_bookmark
+    restaurant = Restaurant.find_or_create_by(name: params[:restaurant][:name])
+    @list_bookmark.restaurant = restaurant
     if @list_bookmark.save
       render json: {
         status: { code: 200, message: "Bookmark Created" },
@@ -32,7 +34,7 @@ class ListBookmarksController < ApplicationController
   private
 
   def list_bookmark_params
-    params.require(:list_bookmark).permit(:restaurant_list_id, :restaurant_id)
+    params.require(:list_bookmark).permit(:restaurant_list_id)
   end
 
   def set_list_bookmark
