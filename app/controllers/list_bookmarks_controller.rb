@@ -4,11 +4,10 @@ class ListBookmarksController < ApplicationController
   def create
     @list_bookmark = ListBookmark.new(list_bookmark_params)
     authorize @list_bookmark
+    restaurant = find_or_create_restaurant(params[:restaurant][:place_id])
+    @list_bookmark.restaurant = restaurant
     if @list_bookmark.save
-      render json: {
-        status: { code: 200, message: "Bookmark Created" },
-        data: @list_bookmark
-      }
+      render json: { bookmark: @list_bookmark }, status: :ok, message: "Bookmark Created"
     else
       render json: { errors: @list_bookmark.errors.full_messages }, status: :unprocessable_entity
     end
@@ -19,8 +18,7 @@ class ListBookmarksController < ApplicationController
 
     if @list_bookmark.destroy
       render json: {
-        status: { code: 200, message: "Bookmark Destroyed" }
-        # redirect?
+        status: :ok, message: "Bookmark Destroyed"
       }
     else
       render json: {
@@ -32,10 +30,16 @@ class ListBookmarksController < ApplicationController
   private
 
   def list_bookmark_params
-    params.require(:list_bookmark).permit(:restaurant_list_id, :restaurant_id)
+    params.require(:list_bookmark).permit(:restaurant_list_id)
   end
 
   def set_list_bookmark
     @list_bookmark = ListBookmark.find(params[:id])
+  end
+
+  def find_or_create_restaurant(place_id)
+    return Restaurant.find_by(place_id:) if Restaurant.find_by(place_id:)
+
+    GooglePlaces.new(place_id).create_restaurant
   end
 end

@@ -2,12 +2,9 @@ class RestaurantListsController < ApplicationController
   before_action :set_restaurant_list, except: %i[create index]
 
   def index
-    @restaurant_lists = policy_scope(Restaurant_List)
+    @restaurant_lists = policy_scope(RestaurantList)
 
-    render json: {
-      status: :ok,
-      data: @restaurant_lists
-    }
+    render json: { lists: @restaurant_lists }, status: :ok
   end
 
   def show
@@ -20,15 +17,12 @@ class RestaurantListsController < ApplicationController
   end
 
   def create
-    @restaurant_list = Restaurant_List.new(restaurant_list_params)
+    @restaurant_list = RestaurantList.new(restaurant_list_params)
     @restaurant_list.user = current_user
     authorize @restaurant_list
 
     if @restaurant_list.save
-      render json: {
-        status: { code: 200, message: "Restaurant List Created" },
-        data: @restaurant_list
-      }
+      render json: { list: @restaurant_list }, status: :ok, message: "list created"
     else
       render json: { errors: @restaurant_list.errors.full_messages }, status: :unprocessable_entity
     end
