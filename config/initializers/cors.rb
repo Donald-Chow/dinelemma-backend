@@ -7,7 +7,12 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "*"
+    if Rails.env.development?
+      origins 'http://localhost:8080'
+    elsif Rails.env.production?
+      origins 'https://dinelemma.netlify.app/'
+      # , 'https://your-custom-domain.com'
+    end
 
     resource "*",
       headers: :any,
