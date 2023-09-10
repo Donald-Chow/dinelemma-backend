@@ -9,7 +9,7 @@ class GooglePlaces
 
   def call
     fields = %i[formatted_address geometry name photo place_id type price_level rating user_ratings_total].join(",")
-    key = Rails.application.credentials.google_map_api_key
+    key = Rails.application.credentials.dig(Rails.env.to_sym, :google_map_api_key)
 
     url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=#{@place_id}&fields=#{fields}&key=#{key}"
     response = RestClient.get(url)
