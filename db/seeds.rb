@@ -19,7 +19,7 @@ User.destroy_all
 
 # Creating test users
 puts 'Creating Users'
-User.create(email: 'test@wagon.com', password: 'secret')
+User.create(email: 'wagon@wagon.com', password: 'secret')
 User.create(email: 'test@test.com', password: 'secret')
 User.create(email: 'kanae@wagon.com', password: 'secret')
 user = User.create(email: 'donald@wagon.com', password: 'secret')
