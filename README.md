@@ -1,3 +1,5 @@
+** This app uses Rails as front end, please use this [link](https://github.com/Donald-Chow/dinelemma-frontend) to view the front end repository.
+
 # README
 
 This README would normally document whatever steps are necessary to get the
