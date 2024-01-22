@@ -16,7 +16,9 @@ In your group, by starting a vote session with a favorites list of your choice, 
 Instead of choosing the ultimate food location, simply decide 'yes' or 'no' for a restaurant shown on the screen.
 Once there is a restaurant where everyone wants to go app will tell you where the group has decided to go once the votes are in.
 
-I have decided to continue building this app and giving it a complete makeover on the frontend UI in Beta version.
+I have decided to continue building this app and gave it a complete makeover on the frontend UI in Beta version.
+
+I am still working on better user interaction and more user feedback on certain actions.
 
 ## Backend
 
@@ -30,6 +32,8 @@ The app also utilitze ACTION CABLE for websocket connection where the app listen
 
 ProstgreSQL is used as the database hosting on HEROKU.
 
+A new dummy bot is added as one of the user where if he is part of a group, he will vote automatically when a vote session has started.
+
 ## Authors
 
 As now now, Dinelemma is a solo Developer project.
@@ -40,3 +44,5 @@ Donald Chow
 
 * 0.1
     * Initial Release
+* 0.2
+    * Added a bot user where it will vote if he is in a group
