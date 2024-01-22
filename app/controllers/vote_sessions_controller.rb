@@ -15,8 +15,11 @@ class VoteSessionsController < ApplicationController
     authorize @vote_session
     if @vote_session.save
       create_votes(@vote_session)
-      render json: { active_session: @vote_session }, status: :ok, message: "Vote Session Created"
-      GroupChannel.broadcast_to(@vote_session.group, { vote_session: @vote_session, message: "Session Started" })
+      render json: { active_session: @vote_session }, status: :ok, message: 'Vote Session Created'
+      GroupChannel.broadcast_to(@vote_session.group, { vote_session: @vote_session, message: 'Session Started' })
+      if @vote_session.group_members.any? { |member| member.user.email == 'bot@wagon.com' }
+        Bot.new.vote(@vote_session.id)
+      end
     else
       render json: { errors: @vote_session.errors.full_messages }, status: :unprocessable_entity
     end
