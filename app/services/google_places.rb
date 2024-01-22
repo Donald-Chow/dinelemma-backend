@@ -17,8 +17,8 @@ class GooglePlaces
   end
 
   def create_restaurant
-    response = self.call
-    params = clean_attributes(response)
+    result = call
+    params = clean_attributes(result) if result
     Restaurant.create(params)
   end
 
@@ -31,6 +31,6 @@ class GooglePlaces
 
     result.delete('formatted_address')
     result.delete('geometry')
-    return result
+    result
   end
 end
